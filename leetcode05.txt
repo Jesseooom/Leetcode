@@ -1,0 +1,58 @@
+//C++ --- 中心回溯解法
+class Solution {
+public:
+    
+    int max_len = 0;
+    int start = 0;
+    int end = 0;
+    string longestPalindrome(string s) {
+        if(s.length() < 2) return s;
+        for(int i = 0;i < s.length();i ++){
+            detection(s,i,i);
+            detection(s,i,i+1);
+        }
+        return s.substr(start,end);  
+    }
+    void detection(string str,int j,int k){
+        while(j >= 0 && k < str.length() && str[k] == str[j]){
+            j --;
+            k ++;
+        }
+        if(max_len < k - j - 1){
+            max_len = k - j - 1;
+            start = j + 1;
+            end = max_len;    //注意，C++中的substr和Java中 substring用法不同。C++中的是其实位置和长度
+        }
+    }
+};
+
+
+// Java --- 中心回溯解法
+
+class Solution {
+public:
+    
+    int max_len = 0;
+    int start = 0;
+    int end = 0;
+    string longestPalindrome(string s) {
+        if(s.length() < 2) return s;
+        for(int i = 0;i < s.length();i ++){
+            detection(s,i,i);
+            detection(s,i,i+1);
+        }
+        return s.substr(start,end);  
+    }
+    void detection(string str,int j,int k){
+        while(j >= 0 && k < str.length() && str[k] == str[j]){
+            j --;
+            k ++;
+        }
+        if(max_len < k - j - 1){
+            max_len = k - j - 1;
+            start = j + 1;
+            end = max_len;    //注意，C++中的substr和Java中 substring用法不同。C++中的是其实位置和长度
+        }
+    }
+};
+
