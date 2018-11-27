@@ -1,0 +1,21 @@
+//暴力破解，太菜了，没通过
+
+class Solution {
+    public int maxArea(int[] height) {
+        int max = 0;
+    	int len = height.length;
+    	int tmp = 0;
+    	for(int i = 0;i < len;i ++) {
+    		for(int j = 0;j < len;j ++) {
+    			if(height[i] <= height[j]) {
+    				tmp = height[i] * Math.abs(i - j);
+    				max = Math.max(tmp, max);
+    			}
+    		}
+    	}
+    	return max;
+    }
+}
+
+//改进为O(n)
+

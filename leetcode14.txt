@@ -1,0 +1,20 @@
+//使用Arrays.sort进行排序 
+// 相关知识点：手写快速排序，递归与非递归。
+
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        if(strs == null) return null;
+        if(strs.length == 0) return "";
+        Arrays.sort(strs);
+        StringBuffer res = new StringBuffer("");
+        int i = 0;
+        char[] left = strs[0].toCharArray();
+        char[] right = strs[strs.length - 1].toCharArray();
+        int len = Math.min(left.length,right.length);
+        while(i < len && left[i] == right[i]){
+            res.append(left[i]);
+            i++;
+        }
+        return res.toString();
+    }
+}
