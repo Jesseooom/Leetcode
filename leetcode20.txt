@@ -1,4 +1,4 @@
-//Java
+//Java 注意
 //注意stack.pop()和stack.peek()栈空报错，用之前要配合好stack.isempty()
 class Solution {
     public static boolean isValid(String s) {
