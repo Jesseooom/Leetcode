@@ -1,0 +1,24 @@
+//Java
+
+class Solution {
+    public static List<String> letterCombinations(String digits) {
+    	String[] digitletter = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"}; 注意数组初始化的方式
+    	List<String> res = new ArrayList<String>();
+    	if(digits.length() == 0) return res;
+    	res.add("");   //必须先加入“” 才能有后续的叠加
+    	for(int i = 0;i < digits.length();i++) {
+    		res = combination(digitletter[digits.charAt(i) - '0'], res);
+    	}
+    	return res;
+    }
+    
+    public static List<String> combination(String digits,List<String> l){
+    	List<String> result = new ArrayList<>();
+    	for(int i = 0;i < digits.length();i++) {
+    		for(String x:l) {                                   //若按照下标索取，则需要用l.get()，来表示ArrayList中的元素
+    			result.add(x + digits.charAt(i));
+    		}
+    	}
+    	return result;
+    }
+}
