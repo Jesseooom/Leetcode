@@ -1,0 +1,61 @@
+// 1 二维数组中的查找
+public class Solution {
+    public boolean Find(int target, int [][] array) {
+    	int i = array.length - 1;
+    	int j = 0;
+    	while(i >= 0 && j < array[i].length) {
+    		if(array[i][j] > target) 
+    			i --;
+    		else if(array[i][j] < target) 
+    			j ++;
+    		else
+    			return true;
+    	}
+    	return false;
+    }
+}
+
+
+// 2 替换空格
+public class Solution {
+    public String replaceSpace(StringBuffer str) {
+    	
+    	for(int i = 0;i < str.length(); i++) {
+    		if(str.charAt(i) == ' ') {
+    			str.replace(i, i+1, "%20");
+    		}
+    	}
+    	return str.toString();
+    }
+}
+
+
+//3 从尾到头打印链表
+/**
+*    public class ListNode {
+*        int val;
+*        ListNode next = null;
+*
+*        ListNode(int val) {
+*            this.val = val;
+*        }
+*    }
+*
+*/
+
+import java.util.ArrayList;
+public class Solution {
+    public static ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
+        ArrayList<Integer> res = new ArrayList<Integer>();
+        ListNode p = listNode;
+        while(p != null){
+            if(p.next == null){
+                res.add(0, p.val);
+                break;
+            }
+            res.add(0, p.val);
+            p = p.next;
+        }
+        return res;
+    }
+}
