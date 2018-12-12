@@ -1,0 +1,89 @@
+// 反转链表
+/*
+public class ListNode {
+    int val;
+    ListNode next = null;
+
+    ListNode(int val) {
+        this.val = val;
+    }
+}*/
+public class Solution {
+    public ListNode ReverseList(ListNode head) {
+        if(head == null || head.next == null) return head;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode prev = dummy;
+        ListNode tail = dummy;
+        ListNode temp = dummy;
+		//这段代码可用于反转k链表
+        while(tail.next != null) tail = tail.next;
+        head = prev.next;
+        while(prev.next != tail){
+            temp = prev.next;
+            prev.next = temp.next;
+            temp.next = tail.next;
+            tail.next = temp;
+        }
+        tail = head;
+        prev = head;
+        return dummy.next;
+    }
+}
+
+// 合并两个排序链表
+	// 递归解法
+	public class Solution {
+		public ListNode Merge(ListNode list1,ListNode list2) {
+			if(list1 == null) return list2;
+			if(list2 == null) return list1;
+			ListNode res = null;
+			if(list1.val < list2.val){
+				res = list1;
+				res.next = Merge(list1.next, list2);
+			}else{
+				res = list2;
+				res.next = Merge(list1, list2.next);
+			}
+			return res;
+		}
+	}
+
+	// 非递归解法
+	public class Solution {
+		public ListNode Merge(ListNode list1,ListNode list2) {
+			if(list1 == null) return list2;
+			if(list2 == null) return list1;
+			ListNode head = null;
+			if(list1.val <= list2.val){
+				head = list1;
+				list1 = head.next;
+			}else{
+				head = list2;
+				list2 = head.next;
+			}
+			ListNode cur = head;
+			while(list1 != null && list2 != null){
+				if(list1.val <= list2.val){
+					cur.next = list1;
+					cur = list1;
+					list1 = list1.next;
+				}else{
+					cur.next = list2;
+					cur = list2;
+					list2 = list2.next;
+				}
+			}
+			while(list1 != null){
+				cur.next = list1;
+				cur = list1;
+				list1 = list1.next;
+			}
+			while(list2 != null){
+				cur.next = list2;
+				cur = list2;
+				list2 = list2.next;
+			}
+			return head;
+		}
+	}

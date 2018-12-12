@@ -389,3 +389,48 @@ public class Solution {
     }
     
 }
+
+// 二叉树的序列化与反序列化
+// 记住！String的length()有(),但是数组没有，而且数组定义如下 Object[] res = new Object[size]
+// == 和 equals 方法的区别：对于基本数据类型（没有String），== 比较值是否相等。对于引用数据类型，==比较的是地址是否相等
+// 而equals比较的是地址里面的值是否相等（可以重写，视情况而定，String对其进行了从写）
+public class Solution {
+    String Serialize(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        if(root != null)
+            queue.add(root);
+        while(!queue.isEmpty()){
+            TreeNode node = queue.poll();
+            if(node != null){
+                queue.offer(node.left);
+                queue.offer(node.right);
+                sb.append(node.val + ",");
+            }else{
+                sb.append("#" + ",");
+            }
+        }
+        if(sb.length() != 0)
+            sb.deleteCharAt(sb.length()-1);
+        return sb.toString();
+  }
+    TreeNode Deserialize(String str) {
+        TreeNode head = null;
+        if(str.length() == 0 || str == null)
+            return head;
+        String[] node = str.split(",");
+        TreeNode[] Tree = new TreeNode[node.length];
+        for(int i = 0; i < node.length; i++){
+            if(!node[i].equals("#")){
+                Tree[i] = new TreeNode(Integer.valueOf(node[i]));
+            }
+        }
+        for(int i = 0, j = 1;j < Tree.length; i++){
+            if(Tree[i] != null){
+                Tree[i].left = Tree[j++];
+                Tree[i].right = Tree[j++];
+            }
+        }
+        return Tree[0];
+  }
+} 
