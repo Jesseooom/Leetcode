@@ -1,0 +1,41 @@
+// 最小的k个数
+// 	堆方法
+// 	冒泡排序前k轮
+// 	快速排序
+
+	import java.util.*;
+	public class Solution {
+		public ArrayList<Integer> GetLeastNumbers_Solution(int [] input, int k) {
+			Arrays.sort(input);
+			ArrayList<Integer> res = new ArrayList<>();
+			if(k > input.length || k <= 0) return res;
+			for(int i = 0;i < k;i ++){
+				res.add(input[i]);
+			}
+			return res;
+		}
+	}
+	
+// 数组中1出现的次数
+// 	暴力解法
+// 	非暴力解法
+
+	public class Solution {
+		public int NumberOf1Between1AndN_Solution(int n) {
+			int res = 0;
+			for(int i = 1; i <= n; i++){
+				res = res + count(i);
+			}
+			return res;
+		}
+		public static int count(int num){
+			int res = 0;
+			if(num == 0) return 0;
+			while(num != 0){
+				if(num % 10 == 1) res++;
+				num = num / 10;
+			}
+			return res;
+		}
+	}
+
