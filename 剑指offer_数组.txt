@@ -39,3 +39,22 @@
 		}
 	}
 
+// 第一次只出现一次的数
+// 代码很精简
+
+public class Solution {
+    public int FirstNotRepeatingChar(String str) {
+        char[] c = str.toCharArray();
+        int[] hash = new int['z'+1];
+        boolean flag = false;
+        for(char i : c){
+            hash[i]++;
+        }
+        for(int i = 0; i < c.length; i++){
+            if(hash[c[i]] == 1) {
+            	return i;
+            }
+        }
+        return -1;
+    }
+}
