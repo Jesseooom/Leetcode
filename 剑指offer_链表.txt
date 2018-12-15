@@ -87,3 +87,80 @@ public class Solution {
 			return head;
 		}
 	}
+	
+// 两个链表的第一个公共节点
+// 暴力法，先行法
+
+    public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
+        ListNode p1 = pHead1;
+        ListNode p2 = pHead2;
+        while(p1 != null){
+            p2 = pHead2;              //这里开始的时候忘记了初始化p2，记住！用while代替for的时候记得初始化！
+            while(p2 != null){
+                if(p1 == p2) {
+                    return p1;
+                }
+                p2 = p2.next;
+            }
+            p1= p1.next;
+        }
+        return null;
+    }
+	
+	
+	public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
+	ListNode p1 = pHead1;
+	ListNode p2 = pHead2;
+	int len1 = 0; int len2 = 0;
+	while(p1 != null){
+		len1++;
+		p1 = p1.next;               //这里一ing要注意，毕额忘记了链表的递增
+	}
+	while(p2 != null){
+		len2++;
+		p2 = p2.next;              ////这里一ing要注意，毕额忘记了链表的递增 
+	}
+	p1 = pHead1;
+	p2 = pHead2;
+	if(len1 > len2){
+		for(int i = 0; i < len1 - len2; i++){
+			p1 = p1.next;
+		}
+	}else{
+		for(int i = 0; i < len2 - len1; i++){
+			p2 = p2.next;
+		}
+	}
+	while(p1 != null && p2 != null){
+		if(p1.val == p2.val) return p1;
+		p1 = p1.next;
+		p2 = p2.next;
+	}
+	return null;
+}
+
+// 删除链表中重复的节点
+// 
+     public ListNode deleteDuplication(ListNode pHead)
+    {
+        ListNode dummy = new ListNode(0);
+        if(pHead == null) return pHead;
+        dummy.next = pHead;
+        ListNode p = pHead;
+        while(p != null){
+            if(p.next != null && p.val == p.next.val){
+                ListNode temp = p;
+                while(p.next != null && p.next.val == p.val)
+                    p = p.next;
+                p = p.next;
+                ListNode start = dummy;
+                while(start.next.val != temp.val)
+                    start = start.next;
+                start.next = p;
+            }else{
+                p = p.next;
+            }
+        }
+        return dummy.next;
+    }
+}
