@@ -1,0 +1,93 @@
+1 手写快排（递归与非递归）
+//递归
+
+    public static int partition(int[] arr, int low, int high) {
+    	int pivot = arr[low];
+    	while(low < high) {
+	    	while(low < high && pivot <= arr[high]) --high;
+	    	arr[low] = arr[high];
+	    	while(low < high && pivot >= arr[low]) ++low;
+	    	arr[high] = arr[low];
+    	}
+    	arr[low] = pivot;
+    	return low;
+    }
+    public static void qsort(int[] arr, int low, int high) {
+    	if(low < high) {
+	    	int pivot = partition(arr, low, high);
+	    	qsort(arr, low, pivot - 1);
+	    	qsort(arr, pivot + 1, high);
+    	}
+    }	
+
+// 非递归快排	
+   public static void qsort_norecur(int[] arr) {
+	Stack<Integer> stack = new Stack<>();
+	int left = 0;
+	int right = arr.length - 1;
+	stack.push(right);
+	stack.push(left);
+	//这里，用栈来模拟递归，很巧妙
+	while(!stack.isEmpty()) {
+		left = stack.pop();
+		right = stack.pop();
+		int index = partition(arr, left, right);
+		if(left < index - 1) {
+			stack.push(index - left);
+			stack.push(left);
+		}
+		if(right > index + 1) {
+			stack.push(right);
+			stack.push(index + 1);
+		}
+	}
+}
+	
+	
+	
+2.手写堆排序
+
+	   public static void maxHeapDown(int[] arr, int start, int end) {
+    	int cur = start;
+    	int left = 2 * start + 1;
+    	while(left <= end) {
+    		if(left < end && arr[left] < arr[left + 1])
+    			left++;
+    		if(arr[cur] >= arr[left]) 
+    			break;
+    		else {
+	    		int tmp = arr[cur];
+	    		arr[cur] = arr[left];
+	    		arr[left] = tmp;
+	    		cur = left;
+	    		left = left * 2 + 1;
+    		}
+    	}
+    }
+    
+    public static void heapsort(int[] arr) {
+    	int len = arr.length; int tmp;
+    	for(int i = len/2-1; i >= 0; i--) {
+    		maxHeapDown(arr, i, len - 1);
+    	}
+    	for(int j = len - 1; j > 0; j--) {
+    		tmp = arr[0];
+    		arr[0] = arr[j];
+    		arr[j] = tmp;
+    		maxHeapDown(arr, 0, j - 1);
+    	}
+    }
+
+
+3.TopK问题：
+	
+    public static void topK(int arr[], int k) {
+    	int len = arr.length;
+    	int pivot = partition(arr, 0, len - 1);
+    	while(pivot != k - 1) {
+    		if(pivot > k - 1)
+    			pivot = partition(arr, 0, pivot - 1);
+    		if(pivot < k - 1)
+    			pivot = partition(arr, pivot + 1, len - 1);
+    	}
+    }	
