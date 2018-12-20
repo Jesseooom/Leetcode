@@ -190,3 +190,30 @@ public class Solution {
         }
         return p1;
     }
+	
+
+// 顺时针打印矩阵
+// 这个问题的坑点是，需要判断单独一行存在的情况，可能出现重复打印的可能
+    public ArrayList<Integer> printMatrix(int [][] matrix) {
+        int row = matrix.length;
+        int col = matrix[0].length;
+        int up = 0; int down = row - 1; int left = 0; int right = col - 1;
+        ArrayList<Integer> res = new ArrayList<>();
+        while(left <= right && up <= down){
+            for(int i = left; i <= right; i++)
+                res.add(matrix[up][i]);
+
+            for(int i = up + 1; i <= down; i++)
+                res.add(matrix[i][right]);
+
+            if(up != down)                                   //这里的if是为了防止单行的情况
+                for(int i = right - 1; i >= left; i--)
+                    res.add(matrix[down][i]);
+
+            if(left != right)                               //这里的if是为了防止当行的情况
+                for(int i = down - 1; i > up; i--)
+                    res.add(matrix[i][left]);
+            left ++; up ++; right --; down --;
+        }
+        return res;
+    }

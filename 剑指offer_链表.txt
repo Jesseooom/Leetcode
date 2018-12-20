@@ -163,4 +163,37 @@ public class Solution {
         }
         return dummy.next;
     }
+	
+//复杂链表的复制
+	分三步解：1.复制节点 2.连接ranmom 3.拆分
+	
+	public static RandomListNode Clone(RandomListNode pHead)
+	{
+	if(pHead == null || pHead.next == null) return pHead;
+	RandomListNode p = pHead;
+	RandomListNode q = pHead.next;
+	while(q != null){
+		p.next = new RandomListNode(p.label);
+		p.next.next = q;
+		p = q;
+		q = q.next;
+	}
+	p.next = new RandomListNode(p.label);
+	
+	p = pHead; q = pHead.next; RandomListNode res = q;
+	while(q != null){
+		if(p.random !=null)
+			q.random = p.random.next;
+		p = p.next.next;
+		q = q.next.next;
+		if(q.next == null) break;
+	}
+	p = pHead; q = res;
+	while(q.next != null){
+		p.next = p.next.next;
+		q.next = q.next.next;
+		p = p.next;
+		q = q.next;
+	}
+	return res;
 }

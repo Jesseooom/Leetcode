@@ -1,0 +1,75 @@
+// 二叉搜索树转化为双向链表
+// 要点是中序遍历到一个节点的时候，将它的左指针指向前一个节点，将上一个节点的右指针指向它，更新pre
+public class Solution {
+    TreeNode pre = null;
+    public TreeNode Convert(TreeNode pRootOfTree) {
+        if(pRootOfTree == null) return null;
+        ConvertSub(pRootOfTree);
+        while(pre.left != null) pre = pre.left;
+        return pre;
+    }
+    public void ConvertSub(TreeNode pRootOfTree){
+        if(pRootOfTree == null) return;
+        ConvertSub(pRootOfTree.left);
+        pRootOfTree.left = pre;
+        if(pre != null) pre.right = pRootOfTree;
+        pre = pRootOfTree;
+        ConvertSub(pRootOfTree.right);
+    }  
+}
+
+// 非递归实现
+
+import java.util.Stack;
+public class Solution {
+    public TreeNode Convert(TreeNode pRootOfTree) {
+        TreeNode head = null;
+        TreeNode pre = null;
+        Stack<TreeNode> stack = new Stack<>();
+        while(pRootOfTree != null || !stack.isEmpty()){
+            while(pRootOfTree != null){
+                stack.push(pRootOfTree);
+                pRootOfTree = pRootOfTree.left;
+            }
+            pRootOfTree = stack.pop();
+            if(head == null){
+                head = pRootOfTree;
+                pre = pRootOfTree;
+            }else{
+                pre.right = pRootOfTree;
+                pRootOfTree.left = pre;
+                pre = pRootOfTree;
+            }
+            pRootOfTree = pRootOfTree.right;
+        }
+        return head;
+    }
+}
+
+//求数的深度：简化版递归
+
+	public int maxDeepth(TreeNode root){
+		if(root == null)
+			return 0;
+		return 1 + Math.max(maxDeepth(root.left), maxDeepth(root.right));
+	}
+
+//平衡二叉树的判定
+// 直接跟据定义用递归就可以搞定
+	public boolean IsBalanced_Solution(TreeNode root) {
+        if(root == null) {
+            return true;
+        }
+        return Math.abs(maxDepth(root.left) - maxDepth(root.right)) <= 1 &&
+            IsBalanced_Solution(root.left) && IsBalanced_Solution(root.right);
+    }
+      
+    private int maxDepth(TreeNode root) {
+        if(root == null) {
+            return 0;
+        }
+        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
+    }
+	
+
+//
